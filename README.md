@@ -8,6 +8,27 @@
 
 本專案整理 OpenClaw AI agent 在 macOS 上的日常運維、設定、遷移、除錯實戰經驗。
 
+### 作為 AI Agent Skill 使用
+
+本 repo 包含 `SKILL.md`，可直接作為 AI coding agent 的 skill 使用。支援所有相容 [Agent Skills 開放標準](https://github.com/anthropics/skills) 的工具：
+
+| 工具 | 安裝方式 |
+|------|---------|
+| **Claude Code** | `git clone` 到 `~/.claude/skills/openclaw-ops` |
+| **Codex CLI** | `git clone` 到 `~/.codex/skills/openclaw-ops` |
+| **Gemini CLI** | `git clone` 到 `~/.gemini/skills/openclaw-ops` |
+| **Kiro / Antigravity** | `git clone` 到 `~/.agents/skills/openclaw-ops` |
+
+```bash
+# 範例：Claude Code
+git clone https://github.com/ImL1s/openclaw-ops.git ~/.claude/skills/openclaw-ops
+
+# 範例：Gemini CLI
+git clone https://github.com/ImL1s/openclaw-ops.git ~/.gemini/skills/openclaw-ops
+```
+
+安裝後，AI agent 會在你詢問 OpenClaw 相關問題時自動載入此 skill。
+
 ### 目錄結構
 
 ```
@@ -51,6 +72,27 @@ AUDIT_PASSWORDS="password1,password2" bash scripts/security-audit.sh
 ## English
 
 Operational knowledge base for managing OpenClaw AI agent deployments on macOS. Covers setup, migration, cron jobs, troubleshooting, and security auditing — battle-tested with real error messages and verified solutions.
+
+### Use as AI Agent Skill
+
+This repo includes a `SKILL.md` and works as a skill for any AI coding agent that supports the [Agent Skills open standard](https://github.com/anthropics/skills):
+
+| Tool | Install |
+|------|---------|
+| **Claude Code** | `git clone` to `~/.claude/skills/openclaw-ops` |
+| **Codex CLI** | `git clone` to `~/.codex/skills/openclaw-ops` |
+| **Gemini CLI** | `git clone` to `~/.gemini/skills/openclaw-ops` |
+| **Kiro / Antigravity** | `git clone` to `~/.agents/skills/openclaw-ops` |
+
+```bash
+# Example: Claude Code
+git clone https://github.com/ImL1s/openclaw-ops.git ~/.claude/skills/openclaw-ops
+
+# Example: Gemini CLI
+git clone https://github.com/ImL1s/openclaw-ops.git ~/.gemini/skills/openclaw-ops
+```
+
+Once installed, the AI agent automatically loads this skill when you ask about OpenClaw operations.
 
 ### Repository Structure
 
