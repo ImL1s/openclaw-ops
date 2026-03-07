@@ -1,0 +1,24 @@
+# 排除不相關和敏感檔案
+.DS_Store
+*.tar.gz
+*.exp
+/tmp/
+
+# 工具狀態（含本機路徑）
+.omc/
+.claude/
+
+# 敏感檔案
+.env
+.env.*
+*.pem
+*.key
+*.p12
+credentials.json
+*-credentials.json
+
+# 日誌與 IDE
+*.log
+.idea/
+.vscode/
+node_modules/
