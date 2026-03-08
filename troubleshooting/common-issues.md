@@ -173,3 +173,71 @@ rsync ... user@target:/Users/<username>/.config/gcloud/
 **影響**: 純粹 cosmetic，不影響任何功能。
 
 **解法**: 忽略，或在目標機 `.zshenv` 第 6 行加 `command -v rbenv &>/dev/null &&` 前綴。
+
+---
+
+## 11. 源機 Gateway 自動重啟（LaunchAgent KeepAlive）
+
+**現象**: 遷移後停掉源機 gateway，但過一陣子 Telegram 又出現 409 衝突。
+
+**原因**: 源機的 LaunchAgent plist 有 `KeepAlive: true`，系統會自動拉起。
+
+**解法**: 停止 + **改名** plist，不能只 `bootout`：
+```bash
+# 停止
+launchctl bootout gui/$(id -u) ~/Library/LaunchAgents/ai.openclaw.gateway.plist
+kill $(lsof -ti:18789) 2>/dev/null
+
+# 永久禁用（改名讓系統找不到）
+mv ~/Library/LaunchAgents/ai.openclaw.gateway.plist \
+   ~/Library/LaunchAgents/ai.openclaw.gateway.plist.disabled
+```
+
+---
+
+## 12. Gateway Token Mismatch（遷移後 cron 全失敗）
+
+**現象**: Cron jobs 跑完但 announce 失敗：
+```
+gateway connect failed: Error: unauthorized: gateway token mismatch
+Subagent completion direct announce failed
+cron announce delivery failed
+```
+
+**原因**: 遷移後的 `openclaw.json` 中 gateway token 與實際 gateway 進程不一致。
+
+**解法**: 在目標機重新安裝 gateway（會重新生成 token）：
+```bash
+openclaw gateway stop
+openclaw gateway install   # 重新生成 token + plist
+# gateway install 會自動啟動
+```
+
+驗證：
+```bash
+openclaw gateway health
+# → OK + Telegram: ok
+# Error log 中不再出現 "token mismatch"
+```
+
+---
+
+## 13. `openclaw cron run` 需要完整 UUID
+
+**現象**:
+```
+Error: unknown cron job id: 170fd747
+```
+
+**原因**: `cron run` 不支援短 ID prefix，需要完整 UUID。
+
+**解法**:
+```bash
+# ❌ 短 ID
+openclaw cron run 170fd747
+
+# ✅ 完整 UUID
+openclaw cron run 170fd747-84c0-4db8-b26e-5f65812ed99a
+```
+
+可從 `openclaw cron list --all` 取得完整 UUID。
