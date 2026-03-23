@@ -12,6 +12,7 @@ set -uo pipefail
 DEST_DIR="${1:-$HOME}"
 DRY_RUN=false
 [[ "${1:-}" == "--dry-run" ]] && DRY_RUN=true && DEST_DIR="$HOME"
+mkdir -p "$DEST_DIR" 2>/dev/null
 
 TIMESTAMP=$(date +%Y%m%d-%H%M%S)
 BACKUP_NAME="openclaw-backup-${TIMESTAMP}"
